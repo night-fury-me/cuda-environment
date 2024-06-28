@@ -4,7 +4,7 @@ This command-line tool helps to manage CUDA-enabled Docker containers easily. It
 
 ## Pre-requisites
 
-Before using these scripts, ensure the following pre-requisites are met:
+Before using this tool, ensure the following pre-requisites are met:
 
 1. **Docker Installed**: Docker needs to be installed and configured properly on your system.
 2. **CUDA Device Availability**: Ensure CUDA-compatible GPU drivers are installed and a CUDA-capable device is available.
