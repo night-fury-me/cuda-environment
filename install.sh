@@ -1,12 +1,5 @@
 #!/bin/bash
 
-# install dependencies
-install_dependencies() {
-    echo "Installing dependencies..."
-    # sudo apt-get update
-    # sudo apt-get install -y net-tools xclip
-}
-
 # copy scripts to ~/.cuda-env
 copy_scripts() {
     echo "Copying scripts to '~/.cuda-env' ..."
@@ -43,7 +36,6 @@ source_bashrc() {
 }
 
 main() {
-    install_dependencies
     copy_scripts
     make_executable
     execute_image_build
