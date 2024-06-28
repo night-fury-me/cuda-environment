@@ -13,6 +13,11 @@
         "gpu",
         "jupyter"
     ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/yourusername/cuda-env.git"
+    },
+    "homepage": "https://github.com/night-fury-me/cuda-environment",
     "author": "night-fury",
     "license": "Apache-2.0"
 }

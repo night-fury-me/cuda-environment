@@ -24,9 +24,20 @@ cuda-env remove CONTAINER_NAME [CONTAINER_NAME_1 CONTAINER_NAME_2 ...] [--all] [
 
 ### Instructions
 
+### Method-01: Install via npm
+
+Run the following commands:
+
+```bash
+npm install -g cuda-env
+install-cuda-env
+```
+
+### Method-02: Manually install from git repository
+
 1. **Create a Folder in Home Directory:**
-    - Create a folder named `.custom-scripts` in your home directory (`~/`).
-    - Place all four bash scripts (`cuda-env.sh`, `create-cuda-env.sh`, `list-cuda-env.sh`, `remove-cuda-env.sh`) inside this folder.
+    - Create the following directory `~/.cuda-env/bin/` under the home directory (`~/`).
+    - Place all four bash scripts located in `bin` folder (`cuda-env.sh`, `create-cuda-env.sh`, `list-cuda-env.sh`, `remove-cuda-env.sh`) inside this folder.
     - Ensure proper permissions (`chmod +x script_name.sh`) are set for each bash script.
 2. **Modify .bashrc:**
     - Open your `.bashrc` file:
@@ -38,14 +49,10 @@ cuda-env remove CONTAINER_NAME [CONTAINER_NAME_1 CONTAINER_NAME_2 ...] [--all] [
     - Add the following lines at the end of the file:
         
         ```bash
-        # >>> Custom Script >>>
-        export PATH="$PATH:~/.custom-scripts"
-        
-        alias cuda-env='~/.custom-scripts/cuda-env.sh'
-        alias create-cuda-env='~/.custom-scripts/create-cuda-env.sh'
-        alias list-cuda-env='~/.custom-scripts/list-cuda-env.sh'
-        alias remove-cuda-env='~/.custom-scripts/remove-cuda-env.sh'
-        # <<< Custom SCript <<<
+        # >>> cuda-env scripts >>>
+        export PATH="$PATH:~/.cuda-env/bin"
+        alias cuda-env="~/.cuda-env/bin/cuda-env.sh"
+        # <<< cuda-env scripts <<<
         ```
         
 3. **Source .bashrc:**
