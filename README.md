@@ -1,6 +1,6 @@
 # CUDA Environment Manager
 
-This command-line tool helps to manage CUDA-enabled Docker containers easily. It provides functionality to create, list, and remove Docker containers based on the "gpu-jupyter" image.
+This cli tool helps to manage CUDA-enabled Docker containers easily. It provides functionality to build-image, create, list, and remove Docker containers based on the "gpu-jupyter" image.
 
 ## Pre-requisites
 
@@ -17,6 +17,7 @@ Before using this tool, ensure the following pre-requisites are met:
 ### Script Usage
 
 ```bash
+cuda-env build-image # To rebuild cuda-env image, if for some reason it is removed
 cuda-env create [--name CONTAINER_NAME] [--port HOST_MACHINE_PORT] [--mount MOUNTING_PATH]
 cuda-env list-envs
 cuda-env remove CONTAINER_NAME [CONTAINER_NAME_1 CONTAINER_NAME_2 ...] [--all] [--force]
@@ -24,20 +25,21 @@ cuda-env remove CONTAINER_NAME [CONTAINER_NAME_1 CONTAINER_NAME_2 ...] [--all] [
 
 ### Instructions
 
-### Method-01: Install via npm
+**Method-01: Install via npm**
 
 Run the following commands:
 
 ```bash
-npm install -g cuda-env
-install-cuda-env
+npm install -g cuda-env && run-post-installation
 ```
 
-### Method-02: Manually install from git repository
+---
+
+**Method-02: Manually install from git repository**
 
 1. **Create a Folder in Home Directory:**
     - Create the following directory `~/.cuda-env/bin/` under the home directory (`~/`).
-    - Place all four bash scripts located in `bin` folder (`cuda-env.sh`, `create-cuda-env.sh`, `list-cuda-env.sh`, `remove-cuda-env.sh`) inside this folder.
+    - Place all five bash scripts (`cuda-env.sh`, `create-cuda-env.sh`, `list-cuda-env.sh`, `remove-cuda-env.sh`, `cuda-env-image-build.sh`) located in `bin` folder inside `~/.cuda-env/bin/`.
     - Ensure proper permissions (`chmod +x script_name.sh`) are set for each bash script.
 2. **Modify .bashrc:**
     - Open your `.bashrc` file:
@@ -70,6 +72,10 @@ install-cuda-env
 ### `cuda-env`
 
 Main command to manage CUDA-enabled Docker containers.
+
+### `build-image`#
+
+Use this command to rebuild the cuda-env image if it is removed from your local docker repository. The cuda-env image is mandatory to `create` any new cuda environment using the CLI tool. 
 
 ### `create`
 
