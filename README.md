@@ -1,18 +1,18 @@
 # CUDA Environment Manager
 
-This cli tool helps to manage CUDA-enabled Docker containers easily. It provides functionality to build-image, create, list, and remove Docker containers based on the "gpu-jupyter" image.
+This CLI tool helps to manage CUDA-enabled Docker containers easily. It provides functionality to build-image, create, list, and remove Docker containers based on the "gpu-jupyter" image.
 
 ## Pre-requisites
 
 Before using this tool, ensure the following pre-requisites are met:
 
-1. **Docker Installed**: Docker needs to be installed and configured properly on your system.
-2. **CUDA Device Availability**: Ensure CUDA-compatible GPU drivers are installed and a CUDA-capable device is available.
+1. **CUDA Device Availability**: Ensure CUDA-compatible GPU drivers are installed and a CUDA-capable device is available.
+2. **Docker Installed**: Docker needs to be installed and configured properly on your system.
 3. **Build GPU-Jupyter Image**: Follow the instructions to build the "gpu-jupyter" image from [GPU-Jupyter GitHub Repository](https://github.com/iot-salzburg/gpu-jupyter)
 4. **netstat:** To check port availability of the host machine. use - [`sudo apt install net-tools`]
 5. **xclip:** To automatically copy the jupyter lab url in the clipboard. use - [`sudo apt-get install xclip`]
 
-**NOTE:** `1`, `3`, `4` and `5` pre-requisites will be handled as a part of the pre installation task during CLI installation using `npm`. So, you do not need to handle those pre-requisites seperately.
+**NOTE:** Pre-requisites `2`, to `5` will be handled as a part of the pre installation process during `cuda-env` CLI installation using `npm`. So, you do not need to handle those pre-requisites seperately.
 
 ## Usage
 
@@ -71,7 +71,7 @@ npm install -g cuda-env && run-post-installation
 
 ### Uninstallation Instruction
 
-To uninstall the `cuda-env` cli tool follow the below instruction.
+To uninstall the `cuda-env` CLI tool follow the below instruction.
 
 - Method-01: If installed via `npm`
     Run the following command - 
@@ -79,7 +79,7 @@ To uninstall the `cuda-env` cli tool follow the below instruction.
     ```bash
     run-pre-uninstallation && npm uninstall -g cuda-env
     ```
-- Method-02: Manually remove the `cuda-env` cli
+- Method-02: Manually remove the `cuda-env` CLI
     1. Remove `~/.cuda-env` directory
     2. Remove the following environment path from .bashrc -
         ```bash
