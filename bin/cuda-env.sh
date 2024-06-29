@@ -3,9 +3,10 @@
 # Function to display usage
 usage() {
     echo "Usage:"
-    echo "  $0 create [--name CONTAINER_NAME] [--port HOST_MACHINE_PORT] [--mount MOUNTING_PATH]"
-    echo "  $0 list-envs"
-    echo "  $0 remove CONTAINER_NAME [CONTAINER_NAME_1 CONTAINER_NAME_2 ...] [--force]"
+    echo "cuda-env build-image \# Use it to rebuild the image, if the cuda-env docker image is removed for some reason."
+    echo "cuda-env create [--name CONTAINER_NAME] [--port HOST_MACHINE_PORT] [--mount MOUNTING_PATH]"
+    echo "cuda-env list-envs"
+    echo "cuda-env remove [CONTAINER_NAME_1 CONTAINER_NAME_2 ...] [--force] [--all]"
     exit 1
 }
 
@@ -42,7 +43,7 @@ remove_containers() {
 
 # Determine which subcommand to execute
 case "$1" in
-    build-cuda-env-image)
+    build-image)
         ~/.cuda-env/bin/cuda-env-image-build.sh
         ;;
     create)
