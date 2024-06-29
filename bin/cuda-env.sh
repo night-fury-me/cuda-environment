@@ -35,16 +35,16 @@ remove_containers() {
 
     # Call remove-cuda-env.sh with all container IDs
     if [ "$force_flag" == "--force" ]; then
-        ~/.cuda-env/bin/remove-cuda-env.sh "${container_ids[@]}" --force
+        ~/.cuda-env/remove-cuda-env.sh "${container_ids[@]}" --force
     else
-        ~/.cuda-env/bin/remove-cuda-env.sh "${container_ids[@]}"
+        ~/.cuda-env/remove-cuda-env.sh "${container_ids[@]}"
     fi
 }
 
 # Determine which subcommand to execute
 case "$1" in
     build-image)
-        ~/.cuda-env/bin/cuda-env-image-build.sh
+        ~/.cuda-env/cuda-env-image-build.sh
         ;;
     create)
         shift
@@ -74,10 +74,10 @@ case "$1" in
         done
 
         # Run create-cuda-env.sh script with optional parameters
-        ~/.cuda-env/bin/create-cuda-env.sh --name "$CONTAINER_NAME" --port "$HOST_MACHINE_PORT" --mount "$MOUNTING_PATH"
+        ~/.cuda-env/create-cuda-env.sh --name "$CONTAINER_NAME" --port "$HOST_MACHINE_PORT" --mount "$MOUNTING_PATH"
         ;;
     list-envs)
-        ~/.cuda-env/bin/list-cuda-env.sh
+        ~/.cuda-env/list-cuda-env.sh
         ;;
     remove)
         shift

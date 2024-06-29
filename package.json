@@ -1,6 +1,6 @@
 {
     "name": "cuda-env",
-    "version": "1.0.8",
+    "version": "1.0.9",
     "description": "A command-line tool for managing CUDA environments",
     "main": "index.js",
     "bin": {
@@ -24,5 +24,6 @@
         "url": "https://github.com/night-fury-me/cuda-environment.git"
     },
     "author": "night-fury",
-    "license": "Apache-2.0"
+    "license": "Apache-2.0",
+    "dependencies": {}
 }
