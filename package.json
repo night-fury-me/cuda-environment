@@ -1,17 +1,18 @@
 {
     "name": "cuda-env",
-    "version": "1.0.7",
+    "version": "1.0.8",
     "description": "A command-line tool for managing CUDA environments",
     "main": "index.js",
     "bin": {
-        "run-post-installation": "./install.sh"
+        "run-post-installation": "./install.sh",
+        "run-pre-uninstallation": "./preuninstall.sh"
     },
     "files": [
         "bin",
+        "preuninstall.sh",
         "package.json",
         "README.md"
     ],
-    "scripts": {},
     "keywords": [
         "cuda",
         "docker",

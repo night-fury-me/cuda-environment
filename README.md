@@ -23,7 +23,7 @@ cuda-env list-envs
 cuda-env remove CONTAINER_NAME [CONTAINER_NAME_1 CONTAINER_NAME_2 ...] [--all] [--force]
 ```
 
-### Instructions
+### Installation Instructions
 
 **Method-01: Install via npm**
 
@@ -65,6 +65,27 @@ npm install -g cuda-env && run-post-installation
         ```
         
 
+---
+
+### Uninstallation Instruction
+
+To uninstall the `cuda-env` cli tool follow the below instruction.
+
+- Method-01: If installed via `npm`
+    Run the following command - 
+
+    ```bash
+    run-pre-uninstallation && npm uninstall -g cuda-env
+    ```
+- Method-02: Manually remove the `cuda-env` cli
+    1. Remove `~/.cuda-env` directory
+    2. Remove the following environment path from .bashrc -
+        ```bash
+        # >>> cuda-env scripts >>>
+        export PATH="$PATH:~/.cuda-env/bin"
+        alias cuda-env="~/.cuda-env/bin/cuda-env.sh"
+        # <<< cuda-env scripts <<<
+        ```
 ---
 
 ### Command Details
