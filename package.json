@@ -1,10 +1,10 @@
 {
     "name": "cuda-env",
-    "version": "1.0.6",
+    "version": "1.0.7",
     "description": "A command-line tool for managing CUDA environments",
     "main": "index.js",
     "bin": {
-        "install-cuda-env": "./install.sh"
+        "run-post-installation": "./install.sh"
     },
     "files": [
         "bin",
