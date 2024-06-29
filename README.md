@@ -12,6 +12,8 @@ Before using this tool, ensure the following pre-requisites are met:
 4. **netstat:** To check port availability of the host machine. use - [`sudo apt install net-tools`]
 5. **xclip:** To automatically copy the jupyter lab url in the clipboard. use - [`sudo apt-get install xclip`]
 
+**NOTE:** `1`, `3`, `4` and `5` pre-requisites will be handled as a part of the pre installation task during CLI installation using `npm`
+
 ## Usage
 
 ### Script Usage
