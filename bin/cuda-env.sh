@@ -1,19 +1,15 @@
 #!/bin/bash
 
-# Function to display usage
 usage() {
     echo "Usage:"
-    echo "cuda-env build-image \# Use it to rebuild the image, if the cuda-env docker image is removed for some reason."
+    echo "cuda-env build-image       # Use it to rebuild the image, if the cuda-env docker image is removed for some reason."
     echo "cuda-env create [--name CONTAINER_NAME] [--port HOST_MACHINE_PORT] [--mount MOUNTING_PATH]"
+    echo "cuda-env run [CONTAINER_NAME] [PYTHON_FILE_PATH]"
     echo "cuda-env list-envs"
     echo "cuda-env remove [CONTAINER_NAME_1 CONTAINER_NAME_2 ...] [--force] [--all]"
+    echo "cuda-env uninstall         # Uninstall cuda-env and remove all related files and paths."
     exit 1
 }
-
-# Check if the correct number of arguments are provided
-if [ "$#" -lt 1 ]; then
-    usage
-fi
 
 remove_containers() {
     local force_flag=""
@@ -35,16 +31,29 @@ remove_containers() {
 
     # Call remove-cuda-env.sh with all container IDs
     if [ "$force_flag" == "--force" ]; then
-        ~/.cuda-env/remove-cuda-env.sh "${container_ids[@]}" --force
+        ~/.cuda-env/bin/remove-cuda-env.sh "${container_ids[@]}" --force
     else
-        ~/.cuda-env/remove-cuda-env.sh "${container_ids[@]}"
+        ~/.cuda-env/bin/remove-cuda-env.sh "${container_ids[@]}"
     fi
+}
+
+run_python_file() {
+    local CONTAINER_NAME="$1"
+    local PYTHON_FILE_PATH="$2"
+
+    # Check if CONTAINER_NAME and PYTHON_FILE_PATH are provided
+    if [ -z "$CONTAINER_NAME" ] || [ -z "$PYTHON_FILE_PATH" ]; then
+        usage
+    fi
+
+    # Execute Python file inside the container
+    docker exec -it "$CONTAINER_NAME" python "/home/jovyan/work/$PYTHON_FILE_PATH"
 }
 
 # Determine which subcommand to execute
 case "$1" in
     build-image)
-        ~/.cuda-env/cuda-env-image-build.sh
+        ~/.cuda-env/bin/cuda-env-image-build.sh
         ;;
     create)
         shift
@@ -74,14 +83,22 @@ case "$1" in
         done
 
         # Run create-cuda-env.sh script with optional parameters
-        ~/.cuda-env/create-cuda-env.sh --name "$CONTAINER_NAME" --port "$HOST_MACHINE_PORT" --mount "$MOUNTING_PATH"
+        ~/.cuda-env/bin/create-cuda-env.sh --name "$CONTAINER_NAME" --port "$HOST_MACHINE_PORT" --mount "$MOUNTING_PATH"
         ;;
     list-envs)
-        ~/.cuda-env/list-cuda-env.sh
+        ~/.cuda-env/bin/list-cuda-env.sh
         ;;
     remove)
         shift
         remove_containers "$@"
+        ;;
+    run)
+        CONTAINER_NAME="$2"
+        PYTHON_FILE_PATH="$3"
+        run_python_file "$CONTAINER_NAME" "$PYTHON_FILE_PATH"
+        ;;
+    uninstall)
+        ~/.cuda-env/uninstall.sh
         ;;
     *)
         usage

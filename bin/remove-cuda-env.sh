@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# Function to display usage
 usage() {
     echo "Usage:"
     echo "  $0 CONTAINER_ID [CONTAINER_ID2 ...] [--force]"
