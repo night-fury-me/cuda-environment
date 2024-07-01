@@ -62,7 +62,6 @@ rm -rf "$temp_dir"
         
         ```bash
         # >>> cuda-env scripts >>>
-        export PATH="$PATH:~/.cuda-env/bin"
         alias cuda-env="~/.cuda-env/bin/main.sh"
         # <<< cuda-env scripts <<<
         ```
