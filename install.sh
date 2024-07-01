@@ -59,7 +59,7 @@ make_executable() {
 # execute cuda-env-image-build.sh
 execute_image_build() {
     echo "Building cuda-env-image..."
-    ~/.cuda-env/bin/cuda-env-image-build.sh
+    ~/.cuda-env/bin/build.sh
 }
 
 # update .bashrc
