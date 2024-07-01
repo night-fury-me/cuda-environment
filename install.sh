@@ -68,7 +68,7 @@ update_bashrc() {
     echo "" >> ~/.bashrc
     echo "# >>> cuda-env scripts >>>" >> ~/.bashrc
     echo 'export PATH="$PATH:~/.cuda-env/bin"' >> ~/.bashrc
-    echo 'alias cuda-env="~/.cuda-env/bin/cuda-env.sh"' >> ~/.bashrc
+    echo 'alias cuda-env="~/.cuda-env/bin/main.sh"' >> ~/.bashrc
     echo "# <<< cuda-env scripts <<<" >> ~/.bashrc
 }
 

@@ -22,7 +22,7 @@ Before using this tool, ensure the following pre-requisites are met:
 cuda-env build-image    # To rebuild cuda-env image, if for some reason it is removed
 cuda-env create [--name CONTAINER_NAME] [--port HOST_MACHINE_PORT] [--mount MOUNTING_PATH]
 cuda-env run [CONTAINER_NAME] [PYTHON_FILE_PATH]
-cuda-env list-envs
+cuda-env list
 cuda-env remove CONTAINER_NAME [CONTAINER_NAME_1 CONTAINER_NAME_2 ...] [--all] [--force]
 cuda-env uninstall      # Uninstall cuda-env and remove all related files and paths.
 ```
@@ -103,7 +103,7 @@ To uninstall the `cuda-env` cli-tool follow the below instruction.
 
 Main command to manage CUDA-enabled Docker containers.
 
-### `build-image`
+### `build`
 
 Use this command to rebuild the cuda-env image if it is removed from your local docker repository. The cuda-env image is mandatory to `create` any new cuda environment using the cli-tool. 
 
@@ -125,7 +125,7 @@ Using this you can run python files in the specified cuda-env
 - PYTHON_FILE_PATH: Path of the python file in your host machine
 
 
-### `list-envs`
+### `list`
 
 Lists all cuda environments (docker containers) created based on the `gpu-jupyter` image.
 

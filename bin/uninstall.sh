@@ -1,17 +1,36 @@
 #!/bin/bash
 
-echo ">>> Pre-uninstallation cleanup started <<<"
-# Remove the ~/.cuda-env directory
-echo "Removing '~/.cuda-env' direcotry ..."
-rm -rf ~/.cuda-env
+error_exit() {
+    echo "Error: $1" >&2
+    exit 1
+}
 
-# Remove the lines from .bashrc
-echo "Removing cuda-env path from .bashrc ..."
-sed -i '/# >>> cuda-env scripts >>>/,/# <<< cuda-env scripts <<</d' ~/.bashrc
+remove_cuda_env_directory() {
+    echo "Removing '~/.cuda-env' directory..."
+    rm -rf ~/.cuda-env || error_exit "Failed to remove '~/.cuda-env' directory."
+}
 
-# Source the .bashrc to apply changes
-echo "Reloading .bashrc ..."
-source ~/.bashrc
+remove_from_bashrc() {
+    local pattern_start="# >>> cuda-env scripts >>>"
+    local pattern_end="# <<< cuda-env scripts <<<"
 
-echo ">>> Pre-uninstallation cleanup complete <<<"
+    echo "Removing cuda-env path from .bashrc..."
+    sed -i "/$pattern_start/,/$pattern_end/d" ~/.bashrc || error_exit "Failed to remove lines from .bashrc."
+}
 
+reload_bashrc() {
+    echo "Reloading .bashrc..."
+    source ~/.bashrc || error_exit "Failed to reload .bashrc."
+}
+
+# Main cleanup function
+cleanup() {
+    echo ">>> Pre-uninstallation cleanup started <<<"
+    remove_cuda_env_directory
+    remove_from_bashrc
+    reload_bashrc
+    echo ">>> Pre-uninstallation cleanup complete <<<"
+}
+
+# Run the cleanup function
+cleanup
