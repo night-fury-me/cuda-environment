@@ -98,7 +98,7 @@ case "$1" in
         run_python_file "$CONTAINER_NAME" "$PYTHON_FILE_PATH"
         ;;
     uninstall)
-        ~/.cuda-env/uninstall.sh
+        ~/.cuda-env/bin/uninstall.sh
         ;;
     *)
         usage
