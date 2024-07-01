@@ -12,7 +12,7 @@ Before using this tool, ensure the following pre-requisites are met:
 4. **netstat:** To check port availability of the host machine. use - [`sudo apt install net-tools`]
 5. **xclip:** To automatically copy the jupyter lab url in the clipboard. use - [`sudo apt-get install xclip`]
 
-**NOTE:** Pre-requisites `2` to `5` will be handled as a part of the pre installation process during `cuda-env` cli-tool installation using `npm`. So, you do not need to handle those pre-requisites seperately.
+**NOTE:** Pre-requisites `2` to `5` will be handled as a part of the pre installation process during `cuda-env` cli-tool installation using `install.sh`. So, you do not need to handle those pre-requisites seperately.
 
 ## Usage
 
@@ -103,7 +103,7 @@ To uninstall the `cuda-env` cli-tool follow the below instruction.
 
 Main command to manage CUDA-enabled Docker containers.
 
-### `build-image`#
+### `build-image`
 
 Use this command to rebuild the cuda-env image if it is removed from your local docker repository. The cuda-env image is mandatory to `create` any new cuda environment using the cli-tool. 
 
