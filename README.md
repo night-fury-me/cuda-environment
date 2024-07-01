@@ -62,7 +62,7 @@ rm -rf "$temp_dir"
         
         ```bash
         # >>> cuda-env scripts >>>
-        alias cuda-env="~/.cuda-env/bin/main.sh"
+        alias cuda-env="~/.cuda-env/main.sh"
         # <<< cuda-env scripts <<<
         ```
         
@@ -91,7 +91,7 @@ To uninstall the `cuda-env` cli-tool follow the below instruction.
     2. Remove the following environment path from .bashrc -
         ```bash
         # >>> cuda-env scripts >>>
-        alias cuda-env="~/.cuda-env/bin/cuda-env.sh"
+        alias cuda-env="~/.cuda-env/main.sh"
         # <<< cuda-env scripts <<<
         ```
 ---
