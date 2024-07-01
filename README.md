@@ -117,9 +117,17 @@ Optional Parameters:
 - `--port HOST_MACHINE_PORT`: Specify the port on the host machine to map to Jupyter. (default: 8848 or a random port if 8848 is already in use)
 - `--mount MOUNTING_PATH`: Specify a custom directory path to mount into the container. (default: present working directory, in which the command was executed)
 
+
+### `run`
+Using this you can run python files in the specified cuda-env
+
+- CONTAINER_NAME: Name of the cuda-env/docker container in which your environment is executing
+- PYTHON_FILE_PATH: Path of the python file in your host machine
+
+
 ### `list-envs`
 
-Lists all cuda environments (docker containers) created based on the "gpu-jupyter" image.
+Lists all cuda environments (docker containers) created based on the `gpu-jupyter` image.
 
 ### `remove`
 
@@ -129,6 +137,11 @@ Optional Parameters:
 
 - `--force`: Forcefully remove containers that are in a running state.
 - `--all`: Remove all containers based on the "gpu-jupyter" image.
+
+### `uninstall`
+
+If you want to remove all files and commands of the `cuda-env` cli tool all together you can use this command.
+It will remove `~/.cuda-env` directory and the added path variable in the `.bashrc`
 
 ---
 
