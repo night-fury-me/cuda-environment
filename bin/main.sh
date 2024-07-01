@@ -13,7 +13,7 @@ usage() {
 }
 
 build_image() {
-    ~/.cuda-env/bin/cuda-env-image-build.sh
+    ~/.cuda-env/bin/build.sh
 }
 
 create_env() {
@@ -43,11 +43,11 @@ create_env() {
     done
 
     # Run create-cuda-env.sh script with optional parameters
-    ~/.cuda-env/bin/create-cuda-env.sh --name "$CONTAINER_NAME" --port "$HOST_MACHINE_PORT" --mount "$MOUNTING_PATH"
+    ~/.cuda-env/bin/create.sh --name "$CONTAINER_NAME" --port "$HOST_MACHINE_PORT" --mount "$MOUNTING_PATH"
 }
 
 list_envs() {
-    ~/.cuda-env/bin/list-cuda-env.sh
+    ~/.cuda-env/bin/list.sh
 }
 
 remove_containers() {
@@ -70,9 +70,9 @@ remove_containers() {
 
     # Call remove-cuda-env.sh with all container IDs
     if [ "$force_flag" == "--force" ]; then
-        ~/.cuda-env/bin/remove-cuda-env.sh "${container_ids[@]}" --force
+        ~/.cuda-env/bin/remove.sh "${container_ids[@]}" --force
     else
-        ~/.cuda-env/bin/remove-cuda-env.sh "${container_ids[@]}"
+        ~/.cuda-env/bin/remove.sh "${container_ids[@]}"
     fi
 }
 
