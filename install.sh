@@ -80,8 +80,8 @@ source_bashrc() {
 }
 
 main() {
-    copy_scripts
     install_dependencies    
+    copy_scripts
     make_executable
     execute_image_build
     update_bashrc
