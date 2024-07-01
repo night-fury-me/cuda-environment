@@ -19,20 +19,27 @@ Before using this tool, ensure the following pre-requisites are met:
 ### Script Usage
 
 ```bash
-cuda-env build-image # To rebuild cuda-env image, if for some reason it is removed
+cuda-env build-image    # To rebuild cuda-env image, if for some reason it is removed
 cuda-env create [--name CONTAINER_NAME] [--port HOST_MACHINE_PORT] [--mount MOUNTING_PATH]
+cuda-env run [CONTAINER_NAME] [PYTHON_FILE_PATH]
 cuda-env list-envs
 cuda-env remove CONTAINER_NAME [CONTAINER_NAME_1 CONTAINER_NAME_2 ...] [--all] [--force]
+cuda-env uninstall      # Uninstall cuda-env and remove all related files and paths.
 ```
 
 ### Installation Instructions
 
-**Method-01: Install via npm**
+**Method-01: Install in a `single-command`**
 
 Run the following commands:
 
 ```bash
-npm install -g cuda-env && run-post-installation
+temp_dir=$(mktemp -d) && \
+curl -L https://github.com/night-fury-me/cuda-environment/archive/main.tar.gz | tar -xz -C "$temp_dir" && \
+cd "$temp_dir/cuda-environment-main" && \
+bash install.sh && \
+rm -rf "$temp_dir"
+
 ```
 
 ---
@@ -41,7 +48,7 @@ npm install -g cuda-env && run-post-installation
 
 1. **Create a Folder in Home Directory:**
     - Create the following directory `~/.cuda-env/bin/` under the home directory (`~/`).
-    - Place all five bash scripts (`cuda-env.sh`, `create-cuda-env.sh`, `list-cuda-env.sh`, `remove-cuda-env.sh`, `cuda-env-image-build.sh`) located in `bin` folder inside `~/.cuda-env/bin/`.
+    - Place all six bash scripts (`cuda-env.sh`, `create-cuda-env.sh`, `list-cuda-env.sh`, `remove-cuda-env.sh`, `cuda-env-image-build.sh, uninstall.sh`) located in `bin` folder inside `~/.cuda-env/bin/`.
     - Ensure proper permissions (`chmod +x script_name.sh`) are set for each bash script.
 2. **Modify .bashrc:**
     - Open your `.bashrc` file:
@@ -73,11 +80,11 @@ npm install -g cuda-env && run-post-installation
 
 To uninstall the `cuda-env` cli-tool follow the below instruction.
 
-- Method-01: If installed via `npm`
+- Method-01: If installed in a `single-command`
     Run the following command - 
 
     ```bash
-    run-pre-uninstallation && npm uninstall -g cuda-env
+    cuda-env uninstall
     ```
 - Method-02: Manually remove the `cuda-env` cli-tool
     1. Remove `~/.cuda-env` directory
