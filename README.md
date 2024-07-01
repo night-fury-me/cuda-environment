@@ -24,7 +24,7 @@ cuda-env create [--name CONTAINER_NAME] [--port HOST_MACHINE_PORT] [--mount MOUN
 cuda-env run [CONTAINER_NAME] [PYTHON_FILE_PATH]
 cuda-env list
 cuda-env deactivate [CONTAINER_NAME]
-cuda-env remove CONTAINER_NAME [CONTAINER_NAME_1 CONTAINER_NAME_2 ...] [--all] [--force]
+cuda-env remove [CONTAINER_NAME_1 CONTAINER_NAME_2 ...] [--all] [--force]
 cuda-env uninstall      # Uninstall cuda-env and remove all related files and paths.
 ```
 
