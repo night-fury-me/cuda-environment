@@ -19,10 +19,11 @@ Before using this tool, ensure the following pre-requisites are met:
 ### Script Usage
 
 ```bash
-cuda-env build-image    # To rebuild cuda-env image, if for some reason it is removed
+cuda-env build    # To rebuild cuda-env image, if for some reason it is removed
 cuda-env create [--name CONTAINER_NAME] [--port HOST_MACHINE_PORT] [--mount MOUNTING_PATH]
 cuda-env run [CONTAINER_NAME] [PYTHON_FILE_PATH]
 cuda-env list
+cuda-env deactivate [CONTAINER_NAME]
 cuda-env remove CONTAINER_NAME [CONTAINER_NAME_1 CONTAINER_NAME_2 ...] [--all] [--force]
 cuda-env uninstall      # Uninstall cuda-env and remove all related files and paths.
 ```
@@ -48,7 +49,7 @@ rm -rf "$temp_dir"
 
 1. **Create a Folder in Home Directory:**
     - Create the following directory `~/.cuda-env/bin/` under the home directory (`~/`).
-    - Place all six bash scripts (`cuda-env.sh`, `create-cuda-env.sh`, `list-cuda-env.sh`, `remove-cuda-env.sh`, `cuda-env-image-build.sh, uninstall.sh`) located in `bin` folder inside `~/.cuda-env/bin/`.
+    - Place all six bash scripts (`main.sh`, `create.sh`, `list.sh`, `remove.sh`, `build.sh, uninstall.sh`) located in `bin` folder inside `~/.cuda-env/bin/`.
     - Ensure proper permissions (`chmod +x script_name.sh`) are set for each bash script.
 2. **Modify .bashrc:**
     - Open your `.bashrc` file:
@@ -62,7 +63,7 @@ rm -rf "$temp_dir"
         ```bash
         # >>> cuda-env scripts >>>
         export PATH="$PATH:~/.cuda-env/bin"
-        alias cuda-env="~/.cuda-env/bin/cuda-env.sh"
+        alias cuda-env="~/.cuda-env/bin/main.sh"
         # <<< cuda-env scripts <<<
         ```
         
@@ -121,8 +122,13 @@ Optional Parameters:
 ### `run`
 Using this you can run python files in the specified cuda-env
 
-- CONTAINER_NAME: Name of the cuda-env/docker container in which your environment is executing
-- PYTHON_FILE_PATH: Path of the python file in your host machine
+- `CONTAINER_NAME`: Name of the cuda-env/docker container in which your environment is executing
+- `PYTHON_FILE_PATH`: Path of the python file in your host machine
+
+### `deactivate`
+
+Deactivate/stop cuda-env/docker container.
+- `CONTAINER_NAME`: Name of the cuda-env/docker container you want to stop/deactivate 
 
 
 ### `list`
