@@ -47,8 +47,7 @@ close_current_session() {
 copy_scripts() {
     echo "Copying scripts to '~/.cuda-env' ..."
     mkdir -p ~/.cuda-env
-    pwd
-    cp -r bin ~/.cuda-env/
+    cp -r . ~/.cuda-env/
 }
 
 # make scripts executable
