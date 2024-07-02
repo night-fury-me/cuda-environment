@@ -79,7 +79,7 @@ validate_and_adjust_port() {
 }
 
 construct_docker_run_command() {
-    DOCKER_RUN_COMMAND="docker run --gpus all -d -it -p ${HOST_MACHINE_PORT}:8888 -v ${MOUNTING_PATH}:/home/jovyan/work -e GRANT_SUDO=yes -e JUPYTER_ENABLE_LAB=yes -e NB_UID=$(id -u) -e NB_GID=$(id -g) --user root --restart always"
+    DOCKER_RUN_COMMAND="docker run --gpus all -d -it -p ${HOST_MACHINE_PORT}:8888 -v ${MOUNTING_PATH}:/home/jovyan/work -e ENVIRONMENT_TYPE=cuda-env -e GRANT_SUDO=yes -e JUPYTER_ENABLE_LAB=yes -e NB_UID=$(id -u) -e NB_GID=$(id -g) --user root --restart always"
 
     if [ -n "$CONTAINER_NAME" ]; then
         DOCKER_RUN_COMMAND+=" --name ${CONTAINER_NAME}"
