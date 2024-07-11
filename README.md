@@ -16,8 +16,6 @@ Before using this tool, ensure the following pre-requisites are met:
 
 ## Usage
 
-### Script Usage
-
 ```bash
 cuda-env build    # To rebuild cuda-env image, if for some reason it is removed
 cuda-env create [--name CONTAINER_NAME] [--port HOST_MACHINE_PORT] [--mount MOUNTING_PATH]
