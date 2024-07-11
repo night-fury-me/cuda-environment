@@ -4,12 +4,25 @@ usage() {
     echo "Usage:"
     echo "cuda-env build        # Use it to rebuild the image, if the cuda-env docker image is removed for some reason."
     echo "cuda-env create [--name CONTAINER_NAME] [--port HOST_MACHINE_PORT] [--mount MOUNTING_PATH]"
-    echo "cuda-env run [CONTAINER_NAME] [PYTHON_FILE_PATH]"
+    echo "cuda-env run [CONTAINER_NAME] [PYTHON_FILE_PATH] [ARG_1 ARG_2 ARG_3 ...]"
     echo "cuda-env list"
     echo "cuda-env remove [CONTAINER_NAME_1 CONTAINER_NAME_2 ...] [--force] [--all]"
     echo "cuda-env deactivate [CONTAINER_NAME]  # Stop the specified Docker container."
     echo "cuda-env uninstall    # Uninstall cuda-env and remove all related files and paths."
     exit 1
+}
+
+normalize_path() {
+    local base_path="$1"
+    local relative_path="$2"
+
+    # If the path is absolute, return it as-is
+    if [[ "$relative_path" = /* ]]; then
+        echo "$relative_path"
+    else
+        # Combine and normalize the paths
+        echo "$base_path/$relative_path" | sed 's|//|/|g'
+    fi
 }
 
 build_image() {
@@ -79,14 +92,21 @@ remove_containers() {
 run_python_file() {
     local CONTAINER_NAME="$1"
     local PYTHON_FILE_PATH="$2"
-
+    shift 2
+    local PYTHON_ARGS="$@"
+    
     # Check if CONTAINER_NAME and PYTHON_FILE_PATH are provided
     if [ -z "$CONTAINER_NAME" ] || [ -z "$PYTHON_FILE_PATH" ]; then
         usage
     fi
-
+    
+    # Normalize the Python file path
+    local WORK_DIR="/home/jovyan/work"
+    local FULL_PYTHON_FILE_PATH
+    FULL_PYTHON_FILE_PATH=$(normalize_path "$WORK_DIR" "$PYTHON_FILE_PATH")
+    
     # Execute Python file inside the container
-    docker exec -it "$CONTAINER_NAME" python "/home/jovyan/work/$PYTHON_FILE_PATH"
+    docker exec -it "$CONTAINER_NAME" python "$FULL_PYTHON_FILE_PATH" $PYTHON_ARGS
 }
 
 deactivate_container() {
