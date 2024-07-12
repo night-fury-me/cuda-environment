@@ -23,6 +23,7 @@ cuda-env build    # To rebuild cuda-env image, if for some reason it is removed
 cuda-env create [--name CONTAINER_NAME] [--port HOST_MACHINE_PORT] [--mount MOUNTING_PATH]
 cuda-env run [CONTAINER_NAME] [PYTHON_FILE_PATH]
 cuda-env list
+cuda-env monitor        # Monitor Nvidia GPU status.
 cuda-env deactivate [CONTAINER_NAME]
 cuda-env remove [CONTAINER_NAME_1 CONTAINER_NAME_2 ...] [--all] [--force]
 cuda-env uninstall      # Uninstall cuda-env and remove all related files and paths.
@@ -132,6 +133,10 @@ Deactivate/stop cuda-env/docker container.
 ### `list`
 
 Lists all cuda environments (docker containers) created based on the `gpu-jupyter` image.
+
+### `monitor` 
+
+Monitor Nvidia Gpu status.
 
 ### `remove`
 

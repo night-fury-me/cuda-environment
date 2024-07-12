@@ -8,6 +8,7 @@ usage() {
     echo "cuda-env list"
     echo "cuda-env remove [CONTAINER_NAME_1 CONTAINER_NAME_2 ...] [--force] [--all]"
     echo "cuda-env deactivate [CONTAINER_NAME]  # Stop the specified Docker container."
+    echo "cuda-env monitor      # Monitor Nvidia GPU status."
     echo "cuda-env uninstall    # Uninstall cuda-env and remove all related files and paths."
     exit 1
 }
@@ -132,6 +133,9 @@ case "$1" in
         ;;
     list)
         list_envs
+        ;;
+    monitor)
+        watch nvidia-smi
         ;;
     remove)
         shift
