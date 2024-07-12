@@ -16,12 +16,10 @@ Before using this tool, ensure the following pre-requisites are met:
 
 ## Usage
 
-### Script Usage
-
 ```bash
 cuda-env build    # To rebuild cuda-env image, if for some reason it is removed
 cuda-env create [--name CONTAINER_NAME] [--port HOST_MACHINE_PORT] [--mount MOUNTING_PATH]
-cuda-env run [CONTAINER_NAME] [PYTHON_FILE_PATH]
+cuda-env run [CONTAINER_NAME] [PYTHON_FILE_PATH] [ARG_1 ARG_2 ARG_3 ...]
 cuda-env list
 cuda-env monitor        # Monitor Nvidia GPU status.
 cuda-env deactivate [CONTAINER_NAME]
@@ -123,6 +121,7 @@ Using this you can run python files in the specified cuda-env
 
 - `CONTAINER_NAME`: Name of the cuda-env/docker container in which your environment is executing
 - `PYTHON_FILE_PATH`: Path of the python file in your host machine
+- `ARG_{}`: Additional arguments to pass in the python file 
 
 ### `deactivate`
 
