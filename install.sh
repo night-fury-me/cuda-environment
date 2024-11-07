@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 
 # install dependencies
 install_dependencies() {
@@ -27,11 +27,11 @@ install_dependencies() {
     sudo apt update
     sudo apt install -y nvidia-container-toolkit
     sudo nvidia-ctk runtime configure --runtime=docker
-    sudo systemctl restart docker
+    #
     sudo usermod -aG docker $USER
-
+    
     echo ""
-    echo ""
+    echo "" 
     echo "Installing net-tools and xclip... "
     sudo apt install -y net-tools xclip
 }
@@ -62,23 +62,23 @@ execute_image_build() {
     ~/.cuda-env/bin/build.sh
 }
 
-# update .bashrc
+# update .zshrc
 update_bashrc() {
-    echo "Updating .bashrc..."
-    echo "" >> ~/.bashrc
-    echo "# >>> cuda-env scripts >>>" >> ~/.bashrc
-    echo 'alias cuda-env="~/.cuda-env/main.sh"' >> ~/.bashrc
-    echo "# <<< cuda-env scripts <<<" >> ~/.bashrc
+    echo "Updating .zshrc..."
+    echo "" >> ~/.zshrc
+    echo "# >>> cuda-env scripts >>>" >> ~/.zshrc
+    echo 'alias cuda-env="~/.cuda-env/main.sh"' >> ~/.zshrc
+    echo "# <<< cuda-env scripts <<<" >> ~/.zshrc
 }
 
-# source .bashrc
+# source .zshrc
 source_bashrc() {
-    echo "Sourcing .bashrc..."
-    source ~/.bashrc
+    echo "Sourcing .zshrc..."
+    source ~/.zshrc
 }
 
 main() {
-    install_dependencies    
+    #install_dependencies    
     copy_scripts
     make_executable
     execute_image_build

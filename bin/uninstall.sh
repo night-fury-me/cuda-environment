@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 
 error_exit() {
     echo "Error: $1" >&2
@@ -14,13 +14,13 @@ remove_from_bashrc() {
     local pattern_start="# >>> cuda-env scripts >>>"
     local pattern_end="# <<< cuda-env scripts <<<"
 
-    echo "Removing cuda-env path from .bashrc..."
-    sed -i "/$pattern_start/,/$pattern_end/d" ~/.bashrc || error_exit "Failed to remove lines from .bashrc."
+    echo "Removing cuda-env path from .zshrc..."
+    sed -i "/$pattern_start/,/$pattern_end/d" ~/.zshrc || error_exit "Failed to remove lines from .zshrc."
 }
 
 reload_bashrc() {
-    echo "Reloading .bashrc..."
-    source ~/.bashrc || error_exit "Failed to reload .bashrc."
+    echo "Reloading .zshrc..."
+    source ~/.zshrc || error_exit "Failed to reload .zshrc."
 }
 
 # Main cleanup function

@@ -50,11 +50,11 @@ rm -rf "$temp_dir"
     - Create the following directory `~/.cuda-env/bin/` under the home directory (`~/`).
     - Place all six bash scripts (`main.sh`, `create.sh`, `list.sh`, `remove.sh`, `build.sh, uninstall.sh`) located in `bin` folder inside `~/.cuda-env/bin/`.
     - Ensure proper permissions (`chmod +x script_name.sh`) are set for each bash script.
-2. **Modify .bashrc:**
-    - Open your `.bashrc` file:
+2. **Modify .zshrc:**
+    - Open your `.zshrc` file:
         
         ```bash
-        nano ~/.bashrc
+        nano ~/.zshrc
         ```
         
     - Add the following lines at the end of the file:
@@ -65,11 +65,11 @@ rm -rf "$temp_dir"
         # <<< cuda-env scripts <<<
         ```
         
-3. **Source .bashrc:**
-    - To apply the changes made to `.bashrc`, run:
+3. **Source .zshrc:**
+    - To apply the changes made to `.zshrc`, run:
         
         ```bash
-        source ~/.bashrc
+        source ~/.zshrc
         ```
         
 
@@ -87,7 +87,7 @@ To uninstall the `cuda-env` cli-tool follow the below instruction.
     ```
 - Method-02: Manually remove the `cuda-env` cli-tool
     1. Remove `~/.cuda-env` directory
-    2. Remove the following environment path from .bashrc -
+    2. Remove the following environment path from .zshrc -
         ```bash
         # >>> cuda-env scripts >>>
         alias cuda-env="~/.cuda-env/main.sh"
@@ -149,7 +149,7 @@ Optional Parameters:
 ### `uninstall`
 
 If you want to remove all files and commands of the `cuda-env` cli tool all together you can use this command.
-It will remove `~/.cuda-env` directory and the added path variable in the `.bashrc`
+It will remove `~/.cuda-env` directory and the added path variable in the `.zshrc`
 
 ---
 
