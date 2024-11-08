@@ -1,90 +1,76 @@
-#!/bin/zsh
+#!/usr/bin/env fish
 
 # install dependencies
-install_dependencies() {
+function install_dependencies
     echo "Installing dependencies ..."
     echo ""
-    echo "Installing docker ..."
-    sudo apt update
-    sudo apt install ca-certificates curl
-    sudo install -m 0755 -d /etc/apt/keyrings
-    sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
-    sudo chmod a+r /etc/apt/keyrings/docker.asc
-    echo \
-    "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
-    $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
-    sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-    sudo apt update
-    sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-    
-    echo ""
-    echo ""
-    echo "Installing nvidia container toolkit ..."
-    curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey | sudo gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg \
-        && curl -s -L https://nvidia.github.io/libnvidia-container/stable/deb/nvidia-container-toolkit.list | \
-            sed 's#deb https://#deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://#g' | \
-            sudo tee /etc/apt/sources.list.d/nvidia-container-toolkit.list
-    sudo apt update
-    sudo apt install -y nvidia-container-toolkit
-    sudo nvidia-ctk runtime configure --runtime=docker
-    #
-    sudo usermod -aG docker $USER
-    
-    echo ""
-    echo "" 
-    echo "Installing net-tools and xclip... "
-    sudo apt install -y net-tools xclip
-}
+    echo "Installing Docker ..."
+    sudo pacman -Syu --noconfirm
+    sudo pacman -S --noconfirm docker docker-compose
 
-close_current_session() {
     echo ""
+    echo "Installing NVIDIA container toolkit ..."
+    # Install dependencies for the NVIDIA container toolkit
+    sudo pacman -S --noconfirm nvidia-container-toolkit libnvidia-container-tools
+    sudo nvidia-container-toolkit configure --runtime=docker
+
+    # Add user to docker group (logout required to take effect)
+    sudo usermod -aG docker $USER
+
     echo ""
-    echo "Enter password again to add docker to the usergroup."
-    su - ${USER}
-}
+    echo "Installing net-tools and xclip..."
+    sudo pacman -S --noconfirm net-tools xclip
+end
 
 # copy scripts to ~/.cuda-env
-copy_scripts() {
+function copy_scripts
     echo "Copying scripts to '~/.cuda-env' ..."
     mkdir -p ~/.cuda-env
     cp -r . ~/.cuda-env/
-}
+end
 
 # make scripts executable
-make_executable() {
+function make_executable
     echo "Making scripts executable..."
     chmod +x ~/.cuda-env/bin/*.sh
-}
+end
 
 # execute cuda-env-image-build.sh
-execute_image_build() {
+function execute_image_build
     echo "Building cuda-env-image..."
     ~/.cuda-env/bin/build.sh
-}
+end
 
-# update .zshrc
-update_bashrc() {
-    echo "Updating .zshrc..."
-    echo "" >> ~/.zshrc
-    echo "# >>> cuda-env scripts >>>" >> ~/.zshrc
-    echo 'alias cuda-env="~/.cuda-env/main.sh"' >> ~/.zshrc
-    echo "# <<< cuda-env scripts <<<" >> ~/.zshrc
-}
+# update config.fish
+function update_fish_config
+    echo "Updating config.fish..."
+    echo "" >> ~/.config/fish/config.fish
+    echo "# >>> cuda-env scripts >>>" >> ~/.config/fish/config.fish
+    echo 'alias cuda-env="~/.cuda-env/main.sh"' >> ~/.config/fish/config.fish
+    echo "# <<< cuda-env scripts <<<" >> ~/.config/fish/config.fish
+end
 
-# source .zshrc
-source_bashrc() {
-    echo "Sourcing .zshrc..."
-    source ~/.zshrc
-}
+# source config.fish
+function source_fish_config
+    echo "Sourcing config.fish..."
+    source ~/.config/fish/config.fish
+end
 
-main() {
-    #install_dependencies    
+# close current session
+function close_current_session
+    echo ""
+    echo "Please log out and log back in to apply docker group changes for $USER."
+end
+
+# main function to run all steps
+function main
+    install_dependencies
     copy_scripts
     make_executable
     execute_image_build
-    update_bashrc
-    source_bashrc
+    update_fish_config
+    source_fish_config
     close_current_session
-}
+end
 
 main

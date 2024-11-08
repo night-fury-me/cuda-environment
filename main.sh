@@ -1,6 +1,6 @@
-#!/bin/zsh
+#!/usr/bin/env fish
 
-usage() {
+function usage
     echo "Usage:"
     echo "cuda-env build        # Use it to rebuild the image, if the cuda-env docker image is removed for some reason."
     echo "cuda-env create [--name CONTAINER_NAME] [--port HOST_MACHINE_PORT] [--mount MOUNTING_PATH]"
@@ -11,147 +11,130 @@ usage() {
     echo "cuda-env monitor      # Monitor Nvidia GPU status."
     echo "cuda-env uninstall    # Uninstall cuda-env and remove all related files and paths."
     exit 1
-}
+end
 
-normalize_path() {
-    local base_path="$1"
-    local relative_path="$2"
+function normalize_path
+    set base_path $argv[1]
+    set relative_path $argv[2]
 
     # If the path is absolute, return it as-is
-    if [[ "$relative_path" = /* ]]; then
+    if string match -q '/*' "$relative_path"
         echo "$relative_path"
     else
         # Combine and normalize the paths
         echo "$base_path/$relative_path" | sed 's|//|/|g'
-    fi
-}
+    end
+end
 
-build_image() {
+function build_image
     ~/.cuda-env/bin/build.sh
-}
+end
 
-create_env() {
-    local CONTAINER_NAME=""
-    local HOST_MACHINE_PORT=""
-    local MOUNTING_PATH=""
+function create_env
+    set CONTAINER_NAME ""
+    set HOST_MACHINE_PORT ""
+    set MOUNTING_PATH ""
 
     # Parse optional parameters for create command
-    while [[ "$#" -gt 0 ]]; do
-        case $1 in
-            --name)
-                CONTAINER_NAME="$2"
-                shift 2
-                ;;
-            --port)
-                HOST_MACHINE_PORT="$2"
-                shift 2
-                ;;
-            --mount)
-                MOUNTING_PATH="$2"
-                shift 2
-                ;;
-            *)
+    while set -q argv[1]
+        switch $argv[1]
+            case '--name'
+                set CONTAINER_NAME $argv[2]
+                set argv (printf "%s\n" $argv[3..-1])
+            case '--port'
+                set HOST_MACHINE_PORT $argv[2]
+                set argv (printf "%s\n" $argv[3..-1])
+            case '--mount'
+                set MOUNTING_PATH $argv[2]
+                set argv (printf "%s\n" $argv[3..-1])
+            case '*'
                 usage
-                ;;
-        esac
-    done
+        end
+    end
 
     # Run create-cuda-env.sh script with optional parameters
     ~/.cuda-env/bin/create.sh --name "$CONTAINER_NAME" --port "$HOST_MACHINE_PORT" --mount "$MOUNTING_PATH"
-}
+end
 
-list_envs() {
+function list_envs
     ~/.cuda-env/bin/list.sh
-}
+end
 
-remove_containers() {
-    local force_flag=""
-    local container_ids=()
+function remove_containers
+    set force_flag ""
+    set container_ids
 
     # Parse command-line arguments
-    while [[ "$#" -gt 0 ]]; do
-        case $1 in
-            --force)
-                force_flag="--force"
-                shift
-                ;;
-            *)
-                container_ids+=("$1")
-                shift
-                ;;
-        esac
-    done
+    while set -q argv[1]
+        switch $argv[1]
+            case '--force'
+                set force_flag "--force"
+                set argv (printf "%s\n" $argv[2..-1])
+            case '*'
+                set container_ids $container_ids $argv[1]
+                set argv (printf "%s\n" $argv[2..-1])
+        end
+    end
 
     # Call remove-cuda-env.sh with all container IDs
-    if [ "$force_flag" == "--force" ]; then
-        ~/.cuda-env/bin/remove.sh "${container_ids[@]}" --force
+    if test "$force_flag" = "--force"
+        ~/.cuda-env/bin/remove.sh $container_ids --force
     else
-        ~/.cuda-env/bin/remove.sh "${container_ids[@]}"
-    fi
-}
+        ~/.cuda-env/bin/remove.sh $container_ids
+    end
+end
 
-run_python_file() {
-    local CONTAINER_NAME="$1"
-    local PYTHON_FILE_PATH="$2"
-    shift 2
-    local PYTHON_ARGS="$@"
-    
+function run_python_file
+    set CONTAINER_NAME $argv[1]
+    set PYTHON_FILE_PATH $argv[2]
+    set PYTHON_ARGS (printf "%s " $argv[3..-1])
+
     # Check if CONTAINER_NAME and PYTHON_FILE_PATH are provided
-    if [ -z "$CONTAINER_NAME" ] || [ -z "$PYTHON_FILE_PATH" ]; then
+    if test -z "$CONTAINER_NAME" -o -z "$PYTHON_FILE_PATH"
         usage
-    fi
-    
+    end
+
     # Normalize the Python file path
-    local WORK_DIR="/home/jovyan/work"
-    local FULL_PYTHON_FILE_PATH
-    FULL_PYTHON_FILE_PATH=$(normalize_path "$WORK_DIR" "$PYTHON_FILE_PATH")
-    
+    set WORK_DIR "/home/jovyan/work"
+    set FULL_PYTHON_FILE_PATH (normalize_path "$WORK_DIR" "$PYTHON_FILE_PATH")
+
     # Execute Python file inside the container
     docker exec -it "$CONTAINER_NAME" python "$FULL_PYTHON_FILE_PATH" $PYTHON_ARGS
-}
+end
 
-deactivate_container() {
-    local CONTAINER_NAME="$1"
-    if [ -z "$CONTAINER_NAME" ]; then
+function deactivate_container
+    set CONTAINER_NAME $argv[1]
+    if test -z "$CONTAINER_NAME"
         usage
-    fi
+    end
     docker stop "$CONTAINER_NAME"
-}
+end
 
-uninstall_cuda_env() {
+function uninstall_cuda_env
     ~/.cuda-env/bin/uninstall.sh
-}
+end
 
 # Main script logic to determine which subcommand to execute
-case "$1" in
-    build)
+switch "$argv[1]"
+    case 'build'
         build_image
-        ;;
-    create)
-        shift
-        create_env "$@"
-        ;;
-    list)
+    case 'create'
+        set argv (printf "%s\n" $argv[2..-1])
+        create_env $argv
+    case 'list'
         list_envs
-        ;;
-    monitor)
+    case 'monitor'
         watch nvidia-smi
-        ;;
-    remove)
-        shift
-        remove_containers "$@"
-        ;;
-    run)
-        shift
-        run_python_file "$@"
-        ;;
-    deactivate)
-        deactivate_container "$2"
-        ;;
-    uninstall)
+    case 'remove'
+        set argv (printf "%s\n" $argv[2..-1])
+        remove_containers $argv
+    case 'run'
+        set argv (printf "%s\n" $argv[2..-1])
+        run_python_file $argv
+    case 'deactivate'
+        deactivate_container $argv[2]
+    case 'uninstall'
         uninstall_cuda_env
-        ;;
-    *)
+    case '*'
         usage
-        ;;
-esac
+end
