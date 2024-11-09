@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/usr/bin/env bash
 
 error_exit() {
     echo "Error: $1" >&2

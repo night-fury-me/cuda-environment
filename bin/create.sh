@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/usr/bin/env bash
 
 usage() {
     echo "Usage: $0 --name CONTAINER_NAME --port HOST_MACHINE_PORT [--mount MOUNTING_PATH]"

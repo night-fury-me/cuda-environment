@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/usr/bin/env bash
 
 # Constants
 IMAGE_NAME="gpu-jupyter"
